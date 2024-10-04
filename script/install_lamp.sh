@@ -1,4 +1,4 @@
-#!/bin/brash
+#!/bin/bash
 
 # x muestra los comandos que se realizan
 # e en caso de fallar detiene la ejecucion
@@ -9,7 +9,6 @@ apt update
 
 # Actualizamos paquetes de sistema operativo
 apt upgrade -y # -y respuesta yes
-
 
 apt install apache2 -y
 
@@ -26,3 +25,8 @@ systemctl restart apache2
 
 # Copio el archivo php a el directorio donde esta los elementos de la web
 cp ../php/index.php /var/www/html
+
+# Modificar propietario de /var/www/html
+chown -R www-data:www-data /var/www/html
+
+apt install mysql-server -y
