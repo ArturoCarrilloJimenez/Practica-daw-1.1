@@ -20,3 +20,34 @@ echo "phpmyadmin phpmyadmin/app-password-confirm password $PHPMYADMIN_APP_PASSWO
 
 # Instalamos phpMyAdmin
 sudo apt install phpmyadmin php-mbstring php-zip php-gd php-json php-curl -y
+# -------------------------------------------------------------------------------------------------------------
+# Intalacion de adminer
+
+# Crear dir para adminer
+mkdir -p /var/www/html/adminer
+
+# Descargo el archivo PHP de Adminer
+wget https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1-mysql.php -P /var/www/html/adminer
+
+# Renombramos el archivo
+mv /var/www/html/adminer/adminer-4.8.1-mysql.php /var/www/html/adminer/index.php
+
+# -------------------------------------------------------------------------------------------------------------
+# Crear base de datos
+mysql -u root <<< "DROP DATABASE IF EXISTS $DB_NAME"
+mysql -u root <<< "CREATE DATABASE $DB_NAME"
+
+# Crear un usuario para la base de datos anterior
+mysql -u root <<< "DROP USER IF EXISTS '$DB_USER'@'%'"
+mysql -u root <<< "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'"
+mysql -u root <<< "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%'"
+
+# -------------------------------------------------------------------------------------------------------------
+#Install goaccess
+sudo apt install goaccess -y
+
+# Crear directorio de stadisticas
+mkdir -p /var/www/html/stats
+
+# Goacess generate html in real time en segundo plano
+goaccess /var/log/apache2/access.log -o /var/www/html/stats/index.html --log-format=COMBINED --real-time-html --daemonize
