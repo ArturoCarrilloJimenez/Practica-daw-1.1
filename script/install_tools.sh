@@ -47,7 +47,25 @@ mysql -u root <<< "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%'"
 sudo apt install goaccess -y
 
 # Crear directorio de stadisticas
-mkdir -p /var/www/html/stats
+mkdir -p /var/www/html/stats # -p Si existe no ocure nada
 
 # Goacess generate html in real time en segundo plano
 goaccess /var/log/apache2/access.log -o /var/www/html/stats/index.html --log-format=COMBINED --real-time-html --daemonize
+
+# -------------------------------------------------------------------------------------------------------------
+# Control de acceso a un archivo de autenticacion basiica
+
+# copiar archivo de configuracion a apache
+cp ../conf/000-default-stats.conf /etc/apache2/sites-available
+
+# Desavilito 000-default
+a2dissite 000-default.conf
+
+# Habilito 000-default-stats.conf
+a2ensite 000-default-stats.conf
+
+# Reinicio apache
+systemctl reload apache2
+
+# Creamos el archivo .htpasswd
+htpasswd -bc /etc/apache2/.htpasswd $STATS_USERNAME $STATS_PASSWORD
