@@ -69,3 +69,21 @@ systemctl reload apache2
 
 # Creamos el archivo .htpasswd
 htpasswd -bc /etc/apache2/.htpasswd $STATS_USERNAME $STATS_PASSWORD
+
+# -------------------------------------------------------------------------------------------------------------
+# Control de acceso a un archivo de autenticacion basica con .htaccess
+
+# copiar archivo de configuracion a apache
+cp ../conf/000-default-htaccess.conf /etc/apache2/sites-available
+
+# Desavilito 000-default
+a2dissite 000-default-stats.conf
+
+# Habilito 000-default-htaccess.conf
+a2ensite 000-default-htaccess.conf
+
+# Reinicio apache
+systemctl reload apache2
+
+# Copiamos al archivo al directorio /var/www/html/stats
+cp ../conf/000-default-htaccess.conf /var/www/html/stats
