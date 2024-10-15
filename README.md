@@ -29,10 +29,11 @@ En esta nos pedira como queremos hacer nuestra instacia y nos pedira varios aspe
 2. __Tipo de intancia__ ``t2.small``
 3. __Par de claves__ ``vokey`` (Esta es la clave que ems dscargado al inicio)
 4. __Configuraciones de red__ selecionaremos la creacion de un nuevo grupo de seguriadad con los siguientes apartados seleccionados
-
 ![Todos los apartados seleccionados](img/grupo_seguridad_1.png)
 
 Una vez hecho esto seleccionaremos el boton de lanzar instancia
+
+## Modificar instancia
 
 ### Asignar ip elastica
 
@@ -44,4 +45,18 @@ Aqui seleccionaremos el boton __Asignar direccion IP elastica__ y le daremos a _
 
 Seleccionamos esta IP y en el apartado de ``accion > Asociar la direcion IP elastica``, buscamos nuestra intancia y le damos a __asignar__, de esta forma abremos logrado asignar una ip fija a nuestra intancia anteriormente creada
 
-![](img/acciones_ip_elastica.png)
+![Asignacion de la ip elastica](img/acciones_ip_elastica.png)
+
+### Modificacion del gupo de seguridad
+
+Debemos de editar el grupo de seguridad de este para no tener futuros problemas en nuestra practicam, para esto iremos a el apartado de ``Red de Seguridad > Security Groups`` y aqui __seleccionaremos al grupo de seguridad que creamos anteriormente__ para nuestra instancia y aqui seleccionaremos __editar reglas de entrada__, se nos abrira un panel con los puertos que emos abierto y deveremos de tener los siguientes:
+
+* __HTTP__ - Puerto __80__ - __0.0.0.0/0__
+* __HTTPS__ - Puerto __403__ - __0.0.0.0/0__
+* __SSH__ - Puerto __22__ - __0.0.0.0/0__
+* __PUERTO PARA GOACCESS__ - Puerto __80__ - __0.0.0.0/0__
+
+Una vez añadidos guardaremos los cambios
+
+![Puertos abiertos](img/grupo_seguridad.png)
+
