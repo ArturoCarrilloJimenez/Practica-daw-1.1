@@ -86,4 +86,4 @@ a2ensite 000-default-htaccess.conf
 systemctl reload apache2
 
 # Copiamos al archivo al directorio /var/www/html/stats
-cp ../conf/000-default-htaccess.conf /var/www/html/stats
+cp ../htaccess/.htaccess /var/www/html/stats
